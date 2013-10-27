@@ -1,0 +1,28 @@
+libthorax is intended to be a programming lingua franca for common and simple 
+operations in project8 analysis.  it is written in ANSI C99, with no bells or
+whistles.  
+
+the aim is to reduce programmer/analyst error by providing an agreed-upon method
+for doing things like converting a digital value to an analog one, or 
+calculating the correct normalization prefactor for an FFTW3 power spectrum.
+
+it is a work in progress and should be criticized frequently.  at present, all
+functions have declared prototypes in a header, and all documentation lives 
+there as well.  implementations are in C files with the same name as the header.
+functions are logically grouped into headers with slightly descriptive names 
+such as "digital.h".
+
+some files are header-only because they declare data types.
+
+i use snake case, get over it.
+
+a preliminary list of things that i think would be good to standardize is below.
+i'm sure there's a lot more but off the top of my head:
+
+* digital to analog
+* analog to digital
+* fftw3 voltage normalization
+* fftw3 power spectrum normalization (dBm and dBW)
+* common power conversions (dBm, dBW, etc to mW, W)
+* calibrations for cernox sensors, platinum sensors, power diode, etc
+
