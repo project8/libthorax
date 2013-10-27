@@ -1,0 +1,29 @@
+/*
+ * digital.h
+ *
+ * written by jared kofron <jared.kofron@gmail.com>
+ *
+ * functions for converting from D2A and A2D.  prototypes are declared in
+ * digital.h.  versions are included for both floats and doubles.  there are
+ * two styles of the functions inspired by the GSL way of doing things - a 
+ * normal version which returns the simple type of interest, and an 'error' 
+ * version which can return information about bad arguments.
+ */
+
+/*
+ * the signatec PX1500 is an 8 bit digitizer
+ */
+#define px1500_bits 8
+#define px1500_min_val -0.25
+#define px1500_max_val 0.25
+#define px1500_range (px1500_max_val - px1500_min_val)
+/*
+ * convenience typedef for readability
+ */
+typedef unsigned char byte;
+
+/*
+ * convert a digital 8 bit value (an unsigned char) to a double or float.
+ */
+float fd2a(byte dig);
+double dd2a(byte dig);
