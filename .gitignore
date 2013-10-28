@@ -12,9 +12,8 @@
 #from cmake
 CMakeCache.txt
 CMakeFiles/
-Makefile
 *build/
-cbuild/
+cbuild*/
 ebuild/
 cmake_install.cmake
 install_manifest.txt
