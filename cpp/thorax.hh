@@ -11,6 +11,7 @@
 extern "C"
 {
     #include "digital.h"
+    #include "thorax_time.h"
 }
 
 #endif /* THORAX_HH_ */
