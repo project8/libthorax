@@ -12,7 +12,7 @@ pbuilder_prepare_project (0 1 0)
 set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/digital.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.h
-#    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_types.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_types.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/thorax.hh
 )
 
