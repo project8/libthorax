@@ -12,8 +12,6 @@
 #include <time.h>
 //#include <string>
 
-typedef uint64_t time_nsec_t;
-
 #ifndef NSEC_PER_SEC
 #define NSEC_PER_SEC 1000000000
 #endif
@@ -29,6 +27,9 @@ typedef uint64_t time_nsec_t;
 static double mantis_timebase = 0.0;
 static uint64_t mantis_timestart = 0;
 #endif // __MACH__
+
+
+typedef uint64_t time_nsec_type;
 
 
 inline int get_time_monotonic(struct timespec* time)
@@ -50,7 +51,7 @@ inline int get_time_monotonic(struct timespec* time)
 #endif
 }
 
-inline time_nsec_t time_to_nsec(struct timespec time)
+inline time_nsec_type time_to_nsec(struct timespec time)
 {
     return (long long int)time.tv_sec * (long long int)NSEC_PER_SEC + (long long int)time.tv_nsec;
 }
