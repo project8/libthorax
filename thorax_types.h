@@ -1,9 +1,8 @@
 #ifndef THORAX_TYPES_H_
 #define THORAX_TYPES_H_
 
-// Standard fixed-width integers
-#define __STDC_FORMAT_MACROS
-#include <stdint.h>
+// Standard fixed-width integers (plus support for use in printf, etc)
+#include <inttypes.h>
 
 
 

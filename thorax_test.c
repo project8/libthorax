@@ -17,7 +17,7 @@ int main()
 {
     struct timespec time;
     get_time_monotonic(&time);
-    printf("%u  %f\n", time_to_nsec(time), time_to_sec(time));
+    printf("%" PRIu64 "  %f\n", time_to_nsec(time), time_to_sec(time));
 
     return 0;
 }
