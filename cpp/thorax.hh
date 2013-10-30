@@ -10,7 +10,7 @@
 
 extern "C"
 {
-    #include "digital.h"
+    #include "thorax_digital.h"
     #include "thorax_time.h"
     #include "thorax_types.h"
 }
