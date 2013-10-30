@@ -30,6 +30,8 @@ static uint64_t mantis_timestart = 0;
 
 typedef uint64_t time_nsec_type;
 
+extern char date_time_format[];
+
 
 inline int get_time_monotonic(struct timespec* time)
 {
@@ -59,6 +61,18 @@ inline double time_to_sec(struct timespec time)
 {
     return (double)time.tv_sec + (double)time.tv_nsec / (double)NSEC_PER_SEC;
 }
+
+
+inline size_t get_time_absolute_str(char* ptr)
+{
+    time_t raw_time;
+    struct tm* processed_time;
+
+    time(&raw_time);
+    processed_time = gmtime(&raw_time);
+    return strftime(ptr, 512, date_time_format, processed_time);
+}
+
 /*
 inline std::string get_time_absolute_str()
 {
