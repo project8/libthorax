@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-#include "digital.h"
+#include "thorax_digital.h"
 #include "thorax_time.h"
 
 

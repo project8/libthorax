@@ -5,7 +5,7 @@
  *
  * documented prototypes are in digital.h
  */
-#include "digital.h"
+#include "thorax_digital.h"
 
 // digital to analog
 float fd2a(byte dig) {
