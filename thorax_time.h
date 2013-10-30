@@ -30,7 +30,7 @@ static uint64_t mantis_timestart = 0;
 extern char date_time_format[];
 
 
-inline int get_time_monotonic(struct timespec* time)
+extern inline int get_time_monotonic(struct timespec* time)
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
     if (!mantis_timestart) {
@@ -49,18 +49,18 @@ inline int get_time_monotonic(struct timespec* time)
 #endif
 }
 
-inline time_nsec_type time_to_nsec(struct timespec time)
+extern inline time_nsec_type time_to_nsec(struct timespec time)
 {
     return (long long int)time.tv_sec * (long long int)NSEC_PER_SEC + (long long int)time.tv_nsec;
 }
 
-inline double time_to_sec(struct timespec time)
+extern inline double time_to_sec(struct timespec time)
 {
     return (double)time.tv_sec + (double)time.tv_nsec / (double)NSEC_PER_SEC;
 }
 
 
-inline size_t get_time_absolute_str(char* ptr)
+extern inline size_t get_time_absolute_str(char* ptr)
 {
     time_t raw_time;
     struct tm* processed_time;
