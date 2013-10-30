@@ -1,5 +1,5 @@
-#ifndef TIME_HH_
-#define TIME_HH_
+#ifndef THORAX_TIME_H_
+#define THORAX_TIME_H_
 
 //#include "types.hh"
 
@@ -94,4 +94,4 @@ inline std::string get_time_absolute_str()
     }
 */
 
-#endif
+#endif // THORAX_TIME_H_

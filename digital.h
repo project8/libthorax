@@ -10,6 +10,9 @@
  * version which can return information about bad arguments.
  */
 
+#ifndef THORAX_DIGITAL_H_
+#define THORAX_DIGITAL_H_
+
 /*
  * the signatec PX1500 is an 8 bit digitizer
  */
@@ -27,3 +30,5 @@ typedef unsigned char byte;
  */
 float fd2a(byte dig);
 double dd2a(byte dig);
+
+#endif // THORAX_DIGITAL_H_
