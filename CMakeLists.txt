@@ -8,6 +8,10 @@ project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
 pbuilder_prepare_project (0 1 0)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    pbuilder_add_ext_libraries (rt)
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
 
 set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
