@@ -40,3 +40,5 @@ target_link_libraries (thorax_cpp_test thorax ${EXTERNAL_LIBRARIES})
 pbuilder_install_headers (${LIBTHORAX_HEADERFILES})
 pbuilder_install_libraries (thorax)
 pbuilder_install_executables (thorax_test thorax_cpp_test)
+
+pbuilder_variables_for_parent()
