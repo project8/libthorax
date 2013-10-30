@@ -32,25 +32,10 @@ extern char date_time_format[];
 
 int get_time_monotonic(struct timespec* time);
 
-extern inline time_nsec_type time_to_nsec(struct timespec time)
-{
-    return (long long int)time.tv_sec * (long long int)NSEC_PER_SEC + (long long int)time.tv_nsec;
-}
+time_nsec_type time_to_nsec(struct timespec time);
 
-extern inline double time_to_sec(struct timespec time)
-{
-    return (double)time.tv_sec + (double)time.tv_nsec / (double)NSEC_PER_SEC;
-}
+double time_to_sec(struct timespec time);
 
-
-extern inline size_t get_time_absolute_str(char* ptr)
-{
-    time_t raw_time;
-    struct tm* processed_time;
-
-    time(&raw_time);
-    processed_time = gmtime(&raw_time);
-    return strftime(ptr, 512, date_time_format, processed_time);
-}
+size_t get_time_absolute_str(char* ptr);
 
 #endif // THORAX_TIME_H_
