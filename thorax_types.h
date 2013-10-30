@@ -5,6 +5,13 @@
 #include <inttypes.h>
 
 
+/*
+ * convenience typedefs for readability
+ */
+typedef uint64_t acquisition_id_type;
+typedef uint64_t record_id_type;
+typedef uint64_t time_nsec_type;
+typedef uint8_t data_type;
 
 
 

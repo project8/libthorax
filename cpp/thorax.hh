@@ -15,4 +15,14 @@ extern "C"
     #include "thorax_types.h"
 }
 
+#include <string>
+
+inline std::string get_absolute_time_string()
+{
+    char t_string_time[ 512 ];
+    get_time_absolute_str( t_string_time );
+    return std::string( t_string_time );
+}
+
+
 #endif /* THORAX_HH_ */

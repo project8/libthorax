@@ -12,6 +12,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     pbuilder_add_ext_libraries (rt)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+include_directories (${PROJECT_SOURCE_DIR})
 
 set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
@@ -33,6 +34,9 @@ target_link_libraries (thorax ${EXTERNAL_LIBRARIES})
 add_executable (thorax_test ${CMAKE_CURRENT_SOURCE_DIR}/thorax_test.c)
 target_link_libraries (thorax_test thorax ${EXTERNAL_LIBRARIES})
 
+add_executable (thorax_cpp_test ${CMAKE_CURRENT_SOURCE_DIR}/cpp/thorax_cpp_test.cc)
+target_link_libraries (thorax_cpp_test thorax ${EXTERNAL_LIBRARIES})
+
 pbuilder_install_headers (${LIBTHORAX_HEADERFILES})
 pbuilder_install_libraries (thorax)
-pbuilder_install_executables (thorax_test)
+pbuilder_install_executables (thorax_test thorax_cpp_test)

@@ -1,18 +1,17 @@
 #ifndef THORAX_TIME_H_
 #define THORAX_TIME_H_
 
-//#include "types.hh"
-
-//#include <cstddef>
-
 #include "thorax_types.h"
 
 #include <sys/time.h>
 #include <time.h>
-//#include <string>
 
 #ifndef NSEC_PER_SEC
 #define NSEC_PER_SEC 1000000000
+#endif
+
+#ifndef SEC_PER_NSEC
+#define SEC_PER_NSEC 1.e-9
 #endif
 
 #ifdef __MACH__
@@ -27,8 +26,6 @@ static double mantis_timebase = 0.0;
 static uint64_t mantis_timestart = 0;
 #endif // __MACH__
 
-
-typedef uint64_t time_nsec_type;
 
 extern char date_time_format[];
 
@@ -72,40 +69,5 @@ inline size_t get_time_absolute_str(char* ptr)
     processed_time = gmtime(&raw_time);
     return strftime(ptr, 512, date_time_format, processed_time);
 }
-
-/*
-inline std::string get_time_absolute_str()
-{
-    time_t t_raw_time;
-    struct tm* t_processed_time;
-    char t_string_time[ 512 ];
-
-    time( &t_raw_time );
-    t_processed_time = localtime( &t_raw_time );
-    strftime( t_string_time, 512, "%Y-%m-%d %H:%M:%S %z", t_processed_time ); // sDateTimeFormat is defined in MonarchTypes.hpp
-    return std::string( t_string_time );
-}
-*/
-
-/*
-    inline timestamp_t get_integer_time()
-    {
-        timeval t_timeval;
-        gettimeofday( &t_timeval, NULL );
-        return( 1000000 * t_timeval.tv_sec + t_timeval.tv_usec );
-    }
-
-    inline std::string get_string_time()
-    {
-        time_t t_raw_time;
-        struct tm* t_processed_time;
-        char t_string_time[ 512 ];
-
-        time( &t_raw_time );
-        t_processed_time = localtime( &t_raw_time );
-        strftime( t_string_time, 512, "%Y-%m-%d %H:%M:%S %z", t_processed_time ); // sDateTimeFormat is defined in MonarchTypes.hpp
-        return std::string( t_string_time );
-    }
-*/
 
 #endif // THORAX_TIME_H_
