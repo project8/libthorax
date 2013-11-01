@@ -9,6 +9,11 @@
 
 char date_time_format[] = "%FT%TZ";
 
+#ifdef __MACH__
+double mantis_timebase = 0.0;
+time_nsec_type mantis_timestart = 0;
+#endif
+
 int get_time_monotonic(struct timespec* time)
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time

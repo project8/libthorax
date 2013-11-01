@@ -22,8 +22,8 @@
 #define MACGIGA UINT64_C(1000000000)
 #endif // MACNANO
 
-static double mantis_timebase = 0.0;
-static uint64_t mantis_timestart = 0;
+extern double mantis_timebase;
+extern time_nsec_type mantis_timestart;
 #endif // __MACH__
 
 
