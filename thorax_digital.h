@@ -23,10 +23,19 @@
 #define px1500_max_val 0.25
 #define px1500_range (px1500_max_val - px1500_min_val)
 
+struct dig_calib_params
+{
+    unsigned levels;
+    double v_range;
+    double v_min;
+};
+
+struct dig_calib_params get_px1500_calib_params();
+
 /*
  * convert a digital 8 bit value (an unsigned char) to a double or float.
  */
-float fd2a(data_type dig);
-double dd2a(data_type dig);
+float fd2a(data_type dig, struct dig_calib_params* params);
+double dd2a(data_type dig, struct dig_calib_params* params);
 
 #endif // THORAX_DIGITAL_H_
