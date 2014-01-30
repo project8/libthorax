@@ -35,7 +35,7 @@ struct dig_calib_params get_px1500_calib_params();
 /*
  * convert a digital 8 bit value (an unsigned char) to a double or float.
  */
-float fd2a(data_type dig, struct dig_calib_params* params);
-double dd2a(data_type dig, struct dig_calib_params* params);
+float fd2a(byte_type dig, struct dig_calib_params* params);
+double dd2a(byte_type dig, struct dig_calib_params* params);
 
 #endif // THORAX_DIGITAL_H_
