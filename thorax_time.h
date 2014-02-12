@@ -22,8 +22,8 @@
 #define MACGIGA UINT64_C(1000000000)
 #endif // MACNANO
 
-extern double mantis_timebase;
-extern time_nsec_type mantis_timestart;
+extern double thorax_timebase;
+extern time_nsec_type thorax_timestart;
 #endif // __MACH__
 
 
@@ -32,9 +32,13 @@ extern char date_time_format[];
 
 int get_time_monotonic(struct timespec* time);
 
+int get_time_current(struct timespec* time);
+
 time_nsec_type time_to_nsec(struct timespec time);
 
 double time_to_sec(struct timespec time);
+
+void time_diff(struct timespec start, struct timespec end, struct timespec* diff);
 
 size_t get_time_absolute_str(char* ptr);
 
