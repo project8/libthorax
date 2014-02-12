@@ -7,27 +7,70 @@
  */
 #include "thorax_digital.h"
 
+struct dig_calib_params get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range )
+{
+    struct dig_calib_params params;
+    params.levels = 1 << n_bits;
+    params.v_range = v_range;
+    params.v_min = v_min;
+    params.inv_levels = 1. / (double)params.levels;
+    params.inv_v_range = 1. / params.v_range;
+    params.data_type_size = data_type_size;
+    return params;
+}
+
 struct dig_calib_params get_px1500_calib_params()
 {
+    return get_calib_params( px1500_bits, px1500_data_type_size, px1500_min_val, px1500_range );
+    /*
     struct dig_calib_params params;
     params.levels = 1 << px1500_bits;
     params.v_range = px1500_range;
     params.v_min = px1500_min_val;
+    params.inv_levels = 1. / (double)params.levels;
+    params.inv_v_range = 1. / params.v_range;
+    params.data_type_size = px1500_data_type_size;
     return params;
+    */
+}
+
+struct dig_calib_params get_px14400_calib_params()
+{
+    return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range );
+    /*
+    struct dig_calib_params params;
+    params.levels = 1 << px14400_bits;
+    params.v_range = px14400_range;
+    params.v_min = px14400_min_val;
+    params.inv_levels = 1. / (double)params.levels;
+    params.inv_v_range = 1. / params.v_range;
+    params.data_type_size = px14400_data_type_size;
+    return params;
+    */
 }
 
 
 // digital to analog
-float fd2a(byte_type dig, struct dig_calib_params* params)
+float fd2a(uint64_t dig, struct dig_calib_params* params)
 {
-    return (*params).v_min + (*params).v_range * (float)dig / (float)((*params).levels);
+    return (*params).v_min + (*params).v_range * (float)dig * (float)((*params).inv_levels);
     //float scale_pct = (unsigned)(dig)/((1 << (px1500_bits - 1)) - 1);
     //return (float)(px1500_min_val + px1500_range*scale_pct);
 }
 
-double dd2a(byte_type dig, struct dig_calib_params* params)
+double dd2a(uint64_t dig, struct dig_calib_params* params)
 {
-    return (*params).v_min + (*params).v_range * (float)dig / (float)((*params).levels);
+    return (*params).v_min + (*params).v_range * (double)dig * (double)((*params).inv_levels);
     //double scale_pct = (unsigned)(dig)/((1 << (px1500_bits - 1)) - 1);
     //return (double)(px1500_min_val + px1500_range*scale_pct);
+}
+
+
+// analog to digital
+uint64_t a2d(double analog, struct dig_calib_params* params)
+{
+    analog = ( analog - (*params).v_min ) * (*params).inv_v_range;
+    if( analog > (double)((*params).levels - 1) ) analog = (*params).levels - 1;
+    else if( analog < 0. ) analog = 0.;
+    return (uint64_t)analog;
 }
