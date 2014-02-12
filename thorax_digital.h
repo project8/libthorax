@@ -35,6 +35,7 @@
 
 struct dig_calib_params
 {
+    unsigned bit_depth;
     unsigned levels;
     double v_range;
     double v_min;

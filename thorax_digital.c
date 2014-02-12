@@ -10,6 +10,7 @@
 struct dig_calib_params get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range )
 {
     struct dig_calib_params params;
+    params.bit_depth = n_bits;
     params.levels = 1 << n_bits;
     params.v_range = v_range;
     params.v_min = v_min;
