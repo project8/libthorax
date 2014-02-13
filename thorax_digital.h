@@ -37,18 +37,18 @@ struct dig_calib_params
 {
     unsigned bit_depth;
     unsigned levels;
+    unsigned data_type_size;
     double v_range;
     double v_min;
     double inv_levels;
     double inv_v_range;
-    unsigned data_type_size;
 };
 
 
-struct dig_calib_params get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range );
+void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
 
-struct dig_calib_params get_px1500_calib_params();
-struct dig_calib_params get_px14400_calib_params();
+void get_px1500_calib_params( struct dig_calib_params *params );
+void get_px14400_calib_params( struct dig_calib_params *params );
 
 /*
  * convert a digital <=64 bit value to a double or float.

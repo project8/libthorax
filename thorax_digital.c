@@ -7,47 +7,28 @@
  */
 #include "thorax_digital.h"
 
-struct dig_calib_params get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range )
+#include <stdio.h>
+
+void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params )
 {
-    struct dig_calib_params params;
-    params.bit_depth = n_bits;
-    params.levels = 1 << n_bits;
-    params.v_range = v_range;
-    params.v_min = v_min;
-    params.inv_levels = 1. / (double)params.levels;
-    params.inv_v_range = 1. / params.v_range;
-    params.data_type_size = data_type_size;
-    return params;
+    params->bit_depth = n_bits;
+    params->levels = 1 << n_bits;
+    params->data_type_size = data_type_size;
+    params->v_range = v_range;
+    params->v_min = v_min;
+    params->inv_levels = 1. / (double)params->levels;
+    params->inv_v_range = 1. / params->v_range;
+    return;
 }
 
-struct dig_calib_params get_px1500_calib_params()
+void get_px1500_calib_params( struct dig_calib_params *params )
 {
-    return get_calib_params( px1500_bits, px1500_data_type_size, px1500_min_val, px1500_range );
-    /*
-    struct dig_calib_params params;
-    params.levels = 1 << px1500_bits;
-    params.v_range = px1500_range;
-    params.v_min = px1500_min_val;
-    params.inv_levels = 1. / (double)params.levels;
-    params.inv_v_range = 1. / params.v_range;
-    params.data_type_size = px1500_data_type_size;
-    return params;
-    */
+    return get_calib_params( px1500_bits, px1500_data_type_size, px1500_min_val, px1500_range, params );
 }
 
-struct dig_calib_params get_px14400_calib_params()
+void get_px14400_calib_params( struct dig_calib_params *params )
 {
-    return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range );
-    /*
-    struct dig_calib_params params;
-    params.levels = 1 << px14400_bits;
-    params.v_range = px14400_range;
-    params.v_min = px14400_min_val;
-    params.inv_levels = 1. / (double)params.levels;
-    params.inv_v_range = 1. / params.v_range;
-    params.data_type_size = px14400_data_type_size;
-    return params;
-    */
+    return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range, params );
 }
 
 
