@@ -33,14 +33,14 @@ void get_px14400_calib_params( struct dig_calib_params *params )
 
 
 // digital to analog
-float fd2a(uint64_t dig, struct dig_calib_params* params)
+float fd2a(uint64_t dig, const struct dig_calib_params* params)
 {
     return (*params).v_min + (*params).v_range * (float)dig * (float)((*params).inv_levels);
     //float scale_pct = (unsigned)(dig)/((1 << (px1500_bits - 1)) - 1);
     //return (float)(px1500_min_val + px1500_range*scale_pct);
 }
 
-double dd2a(uint64_t dig, struct dig_calib_params* params)
+double dd2a(uint64_t dig, const struct dig_calib_params* params)
 {
     return (*params).v_min + (*params).v_range * (double)dig * (double)((*params).inv_levels);
     //double scale_pct = (unsigned)(dig)/((1 << (px1500_bits - 1)) - 1);
@@ -49,7 +49,7 @@ double dd2a(uint64_t dig, struct dig_calib_params* params)
 
 
 // analog to digital
-uint64_t a2d(double analog, struct dig_calib_params* params)
+uint64_t a2d(double analog, const struct dig_calib_params* params)
 {
     analog = ( analog - (*params).v_min ) * (*params).inv_v_range;
     if( analog > (double)((*params).levels - 1) ) analog = (*params).levels - 1;

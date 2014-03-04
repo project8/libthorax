@@ -53,12 +53,12 @@ void get_px14400_calib_params( struct dig_calib_params *params );
 /*
  * convert a digital <=64 bit value to a double or float.
  */
-float fd2a(uint64_t dig, struct dig_calib_params* params);
-double dd2a(uint64_t dig, struct dig_calib_params* params);
+float fd2a(uint64_t dig, const struct dig_calib_params* params);
+double dd2a(uint64_t dig, const struct dig_calib_params* params);
 
 /*
  * convert an analog value to a digital value.
  */
-uint64_t a2d(double analog, struct dig_calib_params* params);
+uint64_t a2d(double analog, const struct dig_calib_params* params);
 
 #endif // THORAX_DIGITAL_H_
