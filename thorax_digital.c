@@ -51,7 +51,7 @@ double dd2a(uint64_t dig, const struct dig_calib_params* params)
 // analog to digital
 uint64_t a2d(double analog, const struct dig_calib_params* params)
 {
-    analog = ( analog - (*params).v_min ) * (*params).inv_v_range;
+    analog = ( analog - (*params).v_min ) * (*params).inv_v_range * (double)((*params).levels);
     if( analog > (double)((*params).levels - 1) ) analog = (*params).levels - 1;
     else if( analog < 0. ) analog = 0.;
     return (uint64_t)analog;
