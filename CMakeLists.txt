@@ -19,10 +19,12 @@ set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_types.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/thorax.hh
 )
 
 set (LIBTHORAX_SOURCEFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.c
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.c
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.c
 )
