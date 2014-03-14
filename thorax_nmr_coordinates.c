@@ -12,8 +12,10 @@ void magnet2cartesian(magnet_coord* m, cartesian_coord* c)
 
   // now we use the conversions derived from the machine drawing
   // from p. hirtle
-  c->x = r_eccentric*sin(m->theta_eccentric) + r_concentric*sin(m->theta_concentric);
-  c->y = r_eccentric*cos(m->theta_eccentric) + r_concentric*cos(m->theta_concentric);
+  c->x = r_eccentric*sin(m->theta_eccentric+m->theta_concentric) 
+    - r_concentric*sin(m->theta_concentric);
+  c->y = r_eccentric*cos(m->theta_eccentric+m->theta_concentric) 
+    - r_concentric*cos(m->theta_concentric);
 }
 
 float cartesian_distance(cartesian_coord* x1, cartesian_coord* x2) 
