@@ -14,8 +14,6 @@ such as "digital.h".
 
 some files are header-only because they declare data types.
 
-i use snake case, get over it.
-
 a preliminary list of things that i think would be good to standardize is below.
 i'm sure there's a lot more but off the top of my head:
 
