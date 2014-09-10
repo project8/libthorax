@@ -44,11 +44,21 @@ struct dig_calib_params
     double inv_v_range;
 };
 
+/*
+ * the Keysight U1084A is an 8 bit digitizer
+ */
+#define u1084a_bits 8
+#define u1084a_data_type_size 1
+#define u1084a_min_val -0.25
+#define u1084a_max_val 0.25
+#define u1084a_range (u1084a_max_val - u1084a_min_val)
+
 
 void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
 
 void get_px1500_calib_params( struct dig_calib_params *params );
 void get_px14400_calib_params( struct dig_calib_params *params );
+void get_u1084a_calib_params( struct dig_calib_params *params );
 
 /*
  * convert a digital <=64 bit value to a double or float.
