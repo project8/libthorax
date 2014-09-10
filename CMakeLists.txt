@@ -7,13 +7,15 @@ cmake_policy (SET CMP0011 NEW)
 
 project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
-pbuilder_prepare_project (0 1 0)
+pbuilder_prepare_project (0 1 2)
+
+pbuilder_add_ext_libraries (m)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     pbuilder_add_ext_libraries (rt)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-include_directories (${PROJECT_SOURCE_DIR})
+include_directories (BEFORE ${PROJECT_SOURCE_DIR})
 
 set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
