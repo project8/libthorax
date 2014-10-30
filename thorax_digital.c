@@ -31,6 +31,11 @@ void get_px14400_calib_params( struct dig_calib_params *params )
     return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range, params );
 }
 
+void get_u1084a_calib_params( struct dig_calib_params *params )
+{
+    return get_calib_params( u1084a_bits, u1084a_data_type_size, u1084a_min_val, u1084a_range, params );
+}
+
 
 // digital to analog
 float fd2a(uint64_t dig, const struct dig_calib_params* params)
