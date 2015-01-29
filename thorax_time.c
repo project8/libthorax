@@ -7,10 +7,15 @@
 
 #include "thorax_time.h"
 
-char date_time_format[] = "%FT%TZ";
+
 
 #ifdef __MACH__
+char date_time_format[] = "%FT%TZ"; // ISO 8601 datetime format
 double thorax_timebase = 0.0;
+time_nsec_type thorax_timestart = 0;
+#elif _WIN32
+char date_time_format[] = "%Y-%m-%dT%H:%M:%SZ"; // ISO 8601 datetime format - Windows has no %F or %T
+time_nsec_type thorax_timecurr = 0;
 time_nsec_type thorax_timestart = 0;
 #endif
 
@@ -29,6 +34,20 @@ int get_time_monotonic(struct timespec* time)
     time->tv_sec = diff * MACNANO;
     time->tv_nsec = diff - (time->tv_sec * MACGIGA);
     return 0;
+#elif _WIN32
+	FILETIME tm;
+	if (! thorax_timestart)
+	{
+		GetSystemTimeAsFileTime(&tm);
+		// thorax_timestart is in nanoseconds
+		thorax_timestart = CYCLESPERNSEC * ( ((time_nsec_type)tm.dwHighDateTime << 32) | (time_nsec_type)tm.dwLowDateTime );
+	}
+	GetSystemTimeAsFileTime(&tm);
+	thorax_timecurr = CYCLESPERNSEC * (((time_nsec_type)tm.dwHighDateTime << 32) | (time_nsec_type)tm.dwLowDateTime);
+	time_nsec_type diff = (thorax_timecurr - thorax_timestart);
+	time->tv_sec = diff * WINNANO;
+	time->tv_nsec = diff - (time->tv_sec * WINGIGA);
+	return 0;
 #else
     return clock_gettime( CLOCK_MONOTONIC, time );
 #endif
@@ -49,6 +68,20 @@ int get_time_current(struct timespec* time)
     time->tv_sec = diff * MACNANO;
     time->tv_nsec = diff - (time->tv_sec * MACGIGA);
     return 0;
+#elif  _WIN32
+	FILETIME tm;
+	if (!thorax_timestart)
+	{
+		GetSystemTimeAsFileTime(&tm);
+		// thorax_timestart is in nanoseconds
+		thorax_timestart = 100 * (((time_nsec_type)tm.dwHighDateTime << 32) | (time_nsec_type)tm.dwLowDateTime);
+	}
+	GetSystemTimeAsFileTime(&tm);
+	thorax_timecurr = 100 * (((time_nsec_type)tm.dwHighDateTime << 32) | (time_nsec_type)tm.dwLowDateTime);
+	time_nsec_type diff = (thorax_timecurr - thorax_timestart);
+	time->tv_sec = diff * WINNANO;
+	time->tv_nsec = diff - (time->tv_sec * WINGIGA);
+	return 0;
 #else
     return clock_gettime(CLOCK_PROCESS_CPUTIME_ID, time);
 #endif
@@ -82,10 +115,17 @@ void time_diff(struct timespec start, struct timespec end, struct timespec* diff
 
 size_t get_time_absolute_str(char* ptr)
 {
-    time_t raw_time;
-    struct tm* processed_time;
+#ifdef _WIN32
+	time_t raw_time = time(NULL);;
+	struct tm processed_time;
+	time(&raw_time);
+	gmtime_s(&processed_time, &raw_time);
+#else
+	time_t raw_time;
+	struct tm* processed_time;
+	time(&raw_time);
+	processed_time = gmtime(&raw_time);
+#endif
 
-    time(&raw_time);
-    processed_time = gmtime(&raw_time);
-    return strftime(ptr, 512, date_time_format, processed_time);
+    return strftime(ptr, 512, date_time_format, &processed_time);
 }
