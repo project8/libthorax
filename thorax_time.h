@@ -5,12 +5,10 @@
 
 #ifndef _WIN32
 #include <sys/time.h>
-#endif
-#include <time.h>
-
-#ifdef _WIN32
+#else
 #include <Windows.h>
 #endif
+#include <time.h>
 
 #ifndef NSEC_PER_SEC
 #define NSEC_PER_SEC 1000000000
