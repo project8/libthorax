@@ -9,7 +9,9 @@ project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
 pbuilder_prepare_project (0 1 3)
 
-pbuilder_add_ext_libraries (m)
+if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    pbuilder_add_ext_libraries (m)
+endif (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     pbuilder_add_ext_libraries (rt)
