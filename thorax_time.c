@@ -14,6 +14,11 @@ double thorax_timebase = 0.0;
 time_nsec_type thorax_timestart = 0;
 #endif
 
+#ifdef _WIN32
+#define CLOCK_MONOTONIC 1
+#define CLOCK_PROCESS_CPUTIME_ID 2
+#endif
+
 int get_time_monotonic(struct timespec* time)
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
@@ -50,7 +55,7 @@ int get_time_current(struct timespec* time)
     time->tv_nsec = diff - (time->tv_sec * MACGIGA);
     return 0;
 #else
-    return clock_gettime(CLOCK_PROCESS_CPUTIME_ID, time);
+	return clock_gettime(CLOCK_PROCESS_CPUTIME_ID, time);
 #endif
 
 }
@@ -89,3 +94,68 @@ size_t get_time_absolute_str(char* ptr)
     processed_time = gmtime(&raw_time);
     return strftime(ptr, 512, date_time_format, processed_time);
 }
+
+#ifdef _WIN32
+LARGE_INTEGER getFILETIMEoffset()
+{
+	SYSTEMTIME s;
+	FILETIME f;
+	LARGE_INTEGER t;
+
+	s.wYear = 1970;
+	s.wMonth = 1;
+	s.wDay = 1;
+	s.wHour = 0;
+	s.wMinute = 0;
+	s.wSecond = 0;
+	s.wMilliseconds = 0;
+	SystemTimeToFileTime(&s, &f);
+	t.QuadPart = f.dwHighDateTime;
+	t.QuadPart <<= 32;
+	t.QuadPart |= f.dwLowDateTime;
+	return (t);
+}
+
+int clock_gettime(int X, struct timespec *tv)
+{
+	LARGE_INTEGER           t;
+	FILETIME            f;
+	double                  microseconds;
+	static LARGE_INTEGER    offset;
+	static double           frequencyToMicroseconds;
+	static int              initialized = 0;
+	static BOOL             usePerformanceCounter = 0;
+
+	if (!initialized) 
+	{
+		LARGE_INTEGER performanceFrequency;
+		initialized = 1;
+		usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
+		if (usePerformanceCounter) 
+		{
+			QueryPerformanceCounter(&offset);
+			frequencyToMicroseconds = (double)performanceFrequency.QuadPart / 1000000.;
+		}
+		else 
+		{
+			offset = getFILETIMEoffset();
+			frequencyToMicroseconds = 10.;
+		}
+	}
+	if (usePerformanceCounter) QueryPerformanceCounter(&t);
+	else 
+	{
+		GetSystemTimeAsFileTime(&f);
+		t.QuadPart = f.dwHighDateTime;
+		t.QuadPart <<= 32;
+		t.QuadPart |= f.dwLowDateTime;
+	}
+
+	t.QuadPart -= offset.QuadPart;
+	microseconds = (double)t.QuadPart / frequencyToMicroseconds;
+	t.QuadPart = microseconds;
+	tv->tv_sec = t.QuadPart * SEC_PER_NSEC;
+	tv->tv_nsec = t.QuadPart % NSEC_PER_SEC;
+	return (0);
+}
+#endif

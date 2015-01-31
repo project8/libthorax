@@ -3,8 +3,14 @@
 
 #include "thorax_types.h"
 
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
 #include <time.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 #ifndef NSEC_PER_SEC
 #define NSEC_PER_SEC 1000000000
@@ -29,6 +35,15 @@ extern time_nsec_type thorax_timestart;
 
 extern char date_time_format[];
 
+#ifdef _WIN32
+struct timespec
+{
+	time_t tv_sec;
+	long tv_nsec;
+};
+LARGE_INTEGER getFILETIMEoffset();
+int clock_gettime(int X, struct timespec* tv);
+#endif
 
 int get_time_monotonic(struct timespec* time);
 
