@@ -33,7 +33,7 @@
 #define px14400_max_val 0.25
 #define px14400_range (px1500_max_val - px1500_min_val)
 
-struct dig_calib_params
+THORAX_API struct dig_calib_params
 {
     unsigned bit_depth;
     unsigned levels;
@@ -54,21 +54,21 @@ struct dig_calib_params
 #define u1084a_range (u1084a_max_val - u1084a_min_val)
 
 
-void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
+THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
 
-void get_px1500_calib_params( struct dig_calib_params *params );
-void get_px14400_calib_params( struct dig_calib_params *params );
-void get_u1084a_calib_params( struct dig_calib_params *params );
+THORAX_API void get_px1500_calib_params( struct dig_calib_params *params );
+THORAX_API void get_px14400_calib_params( struct dig_calib_params *params );
+THORAX_API void get_u1084a_calib_params( struct dig_calib_params *params );
 
 /*
  * convert a digital <=64 bit value to a double or float.
  */
-float fd2a(uint64_t dig, const struct dig_calib_params* params);
-double dd2a(uint64_t dig, const struct dig_calib_params* params);
+THORAX_API float fd2a( uint64_t dig, const struct dig_calib_params* params );
+THORAX_API double dd2a( uint64_t dig, const struct dig_calib_params* params );
 
 /*
  * convert an analog value to a digital value.
  */
-uint64_t a2d(double analog, const struct dig_calib_params* params);
+THORAX_API uint64_t a2d( double analog, const struct dig_calib_params* params );
 
 #endif // THORAX_DIGITAL_H_

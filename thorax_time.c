@@ -5,9 +5,13 @@
  *      Author: nsoblath
  */
 
+
+#define THORAX_API_EXPORTS
+
 #include "thorax_time.h"
 
-char date_time_format[] = "%FT%TZ";
+// Combined date & time, according to the ISO 8601 standard: e.g. 2015-01-31T22:35:58Z
+THORAX_API char date_time_format[] = "%Y-%m-%dT%H:%M:%SZ";
 
 #ifdef __MACH__
 double thorax_timebase = 0.0;
@@ -19,7 +23,7 @@ time_nsec_type thorax_timestart = 0;
 #define CLOCK_PROCESS_CPUTIME_ID 2
 #endif
 
-int get_time_monotonic(struct timespec* time)
+THORAX_API int get_time_monotonic( struct timespec* time )
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
     if (! thorax_timestart)
@@ -39,7 +43,7 @@ int get_time_monotonic(struct timespec* time)
 #endif
 }
 
-int get_time_current(struct timespec* time)
+THORAX_API int get_time_current( struct timespec* time )
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
     if (! thorax_timestart)
@@ -60,17 +64,17 @@ int get_time_current(struct timespec* time)
 
 }
 
-time_nsec_type time_to_nsec(struct timespec time)
+THORAX_API time_nsec_type time_to_nsec( struct timespec time )
 {
     return (long long int)time.tv_sec * (long long int)NSEC_PER_SEC + (long long int)time.tv_nsec;
 }
 
-double time_to_sec(struct timespec time)
+THORAX_API double time_to_sec( struct timespec time )
 {
     return (double)time.tv_sec + (double)time.tv_nsec / (double)NSEC_PER_SEC;
 }
 
-void time_diff(struct timespec start, struct timespec end, struct timespec* diff)
+THORAX_API void time_diff( struct timespec start, struct timespec end, struct timespec* diff )
 {
     if ((end.tv_nsec - start.tv_nsec < 0))
     {
@@ -85,7 +89,7 @@ void time_diff(struct timespec start, struct timespec end, struct timespec* diff
     return;
 }
 
-size_t get_time_absolute_str(char* ptr)
+THORAX_API size_t get_time_absolute_str( char* ptr )
 {
     time_t raw_time;
     struct tm* processed_time;
@@ -96,7 +100,7 @@ size_t get_time_absolute_str(char* ptr)
 }
 
 #ifdef _WIN32
-LARGE_INTEGER getFILETIMEoffset()
+THORAX_API LARGE_INTEGER getFILETIMEoffset()
 {
 	SYSTEMTIME s;
 	FILETIME f;
@@ -116,7 +120,7 @@ LARGE_INTEGER getFILETIMEoffset()
 	return (t);
 }
 
-int clock_gettime(int X, struct timespec *tv)
+THORAX_API int clock_gettime( int X, struct timespec *tv )
 {
 	LARGE_INTEGER           t;
 	FILETIME            f;
