@@ -33,7 +33,7 @@
 #define px14400_max_val 0.25
 #define px14400_range (px1500_max_val - px1500_min_val)
 
-THORAX_API struct dig_calib_params
+struct dig_calib_params
 {
     unsigned bit_depth;
     unsigned levels;

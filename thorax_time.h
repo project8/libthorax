@@ -34,7 +34,7 @@ extern time_nsec_type thorax_timestart;
 extern THORAX_API char date_time_format[];
 
 #ifdef _WIN32
-THORAX_API struct timespec
+struct timespec
 {
 	time_t tv_sec;
 	long tv_nsec;
