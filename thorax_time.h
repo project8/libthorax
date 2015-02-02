@@ -38,6 +38,10 @@ struct timespec
 {
 	time_t tv_sec;
 	long tv_nsec;
+#ifdef __cplusplus
+    bool operator==( const timespec& rhs ) { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
+    bool operator<( const timespec& rhs ) { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
+#endif
 };
 
 THORAX_API LARGE_INTEGER getFILETIMEoffset();
