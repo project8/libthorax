@@ -42,6 +42,7 @@ struct dig_calib_params
     double v_min;
     double inv_levels;
     double inv_v_range;
+    double dac_gain;
 };
 
 /*
@@ -55,6 +56,7 @@ struct dig_calib_params
 
 
 THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
+THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, double dac_gain, struct dig_calib_params *params );
 
 THORAX_API void get_px1500_calib_params( struct dig_calib_params *params );
 THORAX_API void get_px14400_calib_params( struct dig_calib_params *params );
