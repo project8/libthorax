@@ -39,13 +39,18 @@ struct timespec
 	time_t tv_sec;
 	long tv_nsec;
 #ifdef __cplusplus
-    bool operator==( const timespec& rhs ) { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
-    bool operator<( const timespec& rhs ) { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
+    inline bool operator==( const timespec& rhs ) { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
+    inline bool operator<( const timespec& rhs ) { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
 #endif
 };
 
 THORAX_API LARGE_INTEGER getFILETIMEoffset();
 THORAX_API int clock_gettime( int X, struct timespec* tv );
+#else
+#ifdef __cplusplus
+inline bool operator==( const timespec& lhs, const timespec& rhs ) { return lhs.tv_nsec==rhs.tv_nsec && lhs.tv_sec==rhs.tv_sec; }
+inline bool operator<( const timespec& lhs, const timespec& rhs ) { return lhs.tv_sec != rhs.tv_sec ? lhs.tv_sec < rhs.tv_sec : lhs.tv_nsec < rhs.tv_nsec; }
+#endif
 #endif
 
 THORAX_API int get_time_monotonic( struct timespec* time );

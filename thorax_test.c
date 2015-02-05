@@ -7,6 +7,7 @@
 
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include "thorax_digital.h"
 #include "thorax_time.h"
