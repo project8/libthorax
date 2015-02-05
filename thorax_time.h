@@ -39,8 +39,8 @@ struct timespec
 	time_t tv_sec;
 	long tv_nsec;
 #ifdef __cplusplus
-    inline bool operator==( const timespec& rhs ) { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
-    inline bool operator<( const timespec& rhs ) { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
+    inline bool operator==( const timespec& rhs ) const { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
+    inline bool operator<( const timespec& rhs ) const { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
 #endif
 };
 
