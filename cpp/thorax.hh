@@ -31,7 +31,7 @@ inline std::ostream& operator<<( std::ostream& out, const dig_calib_params& para
     out << "Bit depth: " << params.bit_depth << " bits\n";
     out << "Levels: " << params.levels << '\n';
     out << "Data type size: " << params.data_type_size << " bytes\n";
-    out << "Voltage min: " << params.v_min << " V\n";
+    out << "Voltage offset: " << params.v_offset << " V\n";
     out << "Voltage range: " << params.v_range << " V\n";
     out << "1 / levels: " << params.inv_levels << '\n';
     out << "1 / v_range: " << params.inv_v_range << " 1/V";

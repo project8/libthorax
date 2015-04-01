@@ -39,7 +39,7 @@ struct dig_calib_params
     unsigned levels;
     unsigned data_type_size;
     double v_range;
-    double v_min;
+    double v_offset;
     double inv_levels;
     double inv_v_range;
     double dac_gain;
@@ -55,8 +55,8 @@ struct dig_calib_params
 #define u1084a_range (u1084a_max_val - u1084a_min_val)
 
 
-THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, struct dig_calib_params *params );
-THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_min, double v_range, double dac_gain, struct dig_calib_params *params );
+THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, struct dig_calib_params *params );
+THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, double dac_gain, struct dig_calib_params *params );
 
 THORAX_API void get_px1500_calib_params( struct dig_calib_params *params );
 THORAX_API void get_px14400_calib_params( struct dig_calib_params *params );
@@ -65,6 +65,11 @@ THORAX_API void get_u1084a_calib_params( struct dig_calib_params *params );
 /*
  * convert a digital <=64 bit value to a double or float.
  */
+THORAX_API float d2a_uf( uint64_t dig, const struct dig_calib_params* params );
+THORAX_API double d2a_ud( uint64_t dig, const struct dig_calib_params* params );
+THORAX_API float d2a_if( int64_t dig, const struct dig_calib_params* params );
+THORAX_API double d2a_id( int64_t dig, const struct dig_calib_params* params );
+// fd2a and dd2a are deprecated; use d2a_uf and d2a_ud instead
 THORAX_API float fd2a( uint64_t dig, const struct dig_calib_params* params );
 THORAX_API double dd2a( uint64_t dig, const struct dig_calib_params* params );
 
