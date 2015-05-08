@@ -7,7 +7,7 @@ cmake_policy (SET CMP0011 NEW)
 
 project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
-pbuilder_prepare_project (0 1 3)
+pbuilder_prepare_project (0 2 0)
 
 if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     pbuilder_add_ext_libraries (m)
