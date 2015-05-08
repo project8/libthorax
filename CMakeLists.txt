@@ -9,13 +9,15 @@ project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
 pbuilder_prepare_project (0 1 3)
 
-pbuilder_add_ext_libraries (m)
+if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    pbuilder_add_ext_libraries (m)
+endif (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     pbuilder_add_ext_libraries (rt)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-include_directories (BEFORE ${PROJECT_SOURCE_DIR})
+include_directories (BEFORE ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/cpp)
 
 set (LIBTHORAX_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
@@ -46,4 +48,5 @@ pbuilder_install_headers (${LIBTHORAX_HEADERFILES})
 pbuilder_install_libraries (thorax)
 pbuilder_install_executables (thorax_test thorax_cpp_test)
 
+message(STATUS "calling variables for parents from libthorax")
 pbuilder_variables_for_parent()

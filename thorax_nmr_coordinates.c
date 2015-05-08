@@ -3,9 +3,12 @@
  *
  * written by jared kofron <jared.kofron@gmail.com>
  */
+
+#define THORAX_API_EXPORTS
+
 #include "thorax_nmr_coordinates.h"
 
-void magnet2cartesian(magnet_coord* m, cartesian_coord* c) 
+THORAX_API void magnet2cartesian( magnet_coord* m, cartesian_coord* c )
 {
   // first the easy part.  z is just z.
   c->z = m->z;
@@ -18,7 +21,7 @@ void magnet2cartesian(magnet_coord* m, cartesian_coord* c)
     - r_concentric*cos(m->theta_concentric);
 }
 
-float cartesian_distance(cartesian_coord* x1, cartesian_coord* x2) 
+THORAX_API float cartesian_distance( cartesian_coord* x1, cartesian_coord* x2 )
 {
   return sqrt(pow((x1->x - x2->x),2.0) + pow(x1->y - x2->y,2.0) + pow(x1->z - x2->z,2.0));
 }

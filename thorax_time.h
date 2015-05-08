@@ -3,7 +3,11 @@
 
 #include "thorax_types.h"
 
+#ifndef _WIN32
 #include <sys/time.h>
+#else
+#include <Windows.h>
+#endif
 #include <time.h>
 
 #ifndef NSEC_PER_SEC
@@ -27,19 +31,38 @@ extern time_nsec_type thorax_timestart;
 #endif // __MACH__
 
 
-extern char date_time_format[];
+extern THORAX_API char date_time_format[];
 
+#ifdef _WIN32
+struct timespec
+{
+	time_t tv_sec;
+	long tv_nsec;
+#ifdef __cplusplus
+    inline bool operator==( const timespec& rhs ) const { return tv_nsec==rhs.tv_nsec && tv_sec==rhs.tv_sec; }
+    inline bool operator<( const timespec& rhs ) const { return tv_sec != rhs.tv_sec ? tv_sec < rhs.tv_sec : tv_nsec < rhs.tv_nsec; }
+#endif
+};
 
-int get_time_monotonic(struct timespec* time);
+THORAX_API LARGE_INTEGER getFILETIMEoffset();
+THORAX_API int clock_gettime( int X, struct timespec* tv );
+#else
+#ifdef __cplusplus
+inline bool operator==( const timespec& lhs, const timespec& rhs ) { return lhs.tv_nsec==rhs.tv_nsec && lhs.tv_sec==rhs.tv_sec; }
+inline bool operator<( const timespec& lhs, const timespec& rhs ) { return lhs.tv_sec != rhs.tv_sec ? lhs.tv_sec < rhs.tv_sec : lhs.tv_nsec < rhs.tv_nsec; }
+#endif
+#endif
 
-int get_time_current(struct timespec* time);
+THORAX_API int get_time_monotonic( struct timespec* time );
 
-time_nsec_type time_to_nsec(struct timespec time);
+THORAX_API int get_time_current( struct timespec* time );
 
-double time_to_sec(struct timespec time);
+THORAX_API time_nsec_type time_to_nsec( struct timespec time );
 
-void time_diff(struct timespec start, struct timespec end, struct timespec* diff);
+THORAX_API double time_to_sec( struct timespec time );
 
-size_t get_time_absolute_str(char* ptr);
+THORAX_API void time_diff( struct timespec start, struct timespec end, struct timespec* diff );
+
+THORAX_API size_t get_time_absolute_str( char* ptr );
 
 #endif // THORAX_TIME_H_

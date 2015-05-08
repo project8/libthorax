@@ -5,16 +5,25 @@
  *      Author: nsoblath
  */
 
+
+#define THORAX_API_EXPORTS
+
 #include "thorax_time.h"
 
-char date_time_format[] = "%FT%TZ";
+// Combined date & time, according to the ISO 8601 standard: e.g. 2015-01-31T22:35:58Z
+THORAX_API char date_time_format[] = "%Y-%m-%dT%H:%M:%SZ";
 
 #ifdef __MACH__
 double thorax_timebase = 0.0;
 time_nsec_type thorax_timestart = 0;
 #endif
 
-int get_time_monotonic(struct timespec* time)
+#ifdef _WIN32
+#define CLOCK_MONOTONIC 1
+#define CLOCK_PROCESS_CPUTIME_ID 2
+#endif
+
+THORAX_API int get_time_monotonic( struct timespec* time )
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
     if (! thorax_timestart)
@@ -34,7 +43,7 @@ int get_time_monotonic(struct timespec* time)
 #endif
 }
 
-int get_time_current(struct timespec* time)
+THORAX_API int get_time_current( struct timespec* time )
 {
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
     if (! thorax_timestart)
@@ -50,22 +59,22 @@ int get_time_current(struct timespec* time)
     time->tv_nsec = diff - (time->tv_sec * MACGIGA);
     return 0;
 #else
-    return clock_gettime(CLOCK_PROCESS_CPUTIME_ID, time);
+	return clock_gettime(CLOCK_PROCESS_CPUTIME_ID, time);
 #endif
 
 }
 
-time_nsec_type time_to_nsec(struct timespec time)
+THORAX_API time_nsec_type time_to_nsec( struct timespec time )
 {
     return (long long int)time.tv_sec * (long long int)NSEC_PER_SEC + (long long int)time.tv_nsec;
 }
 
-double time_to_sec(struct timespec time)
+THORAX_API double time_to_sec( struct timespec time )
 {
     return (double)time.tv_sec + (double)time.tv_nsec / (double)NSEC_PER_SEC;
 }
 
-void time_diff(struct timespec start, struct timespec end, struct timespec* diff)
+THORAX_API void time_diff( struct timespec start, struct timespec end, struct timespec* diff )
 {
     if ((end.tv_nsec - start.tv_nsec < 0))
     {
@@ -80,7 +89,7 @@ void time_diff(struct timespec start, struct timespec end, struct timespec* diff
     return;
 }
 
-size_t get_time_absolute_str(char* ptr)
+THORAX_API size_t get_time_absolute_str( char* ptr )
 {
     time_t raw_time;
     struct tm* processed_time;
@@ -89,3 +98,68 @@ size_t get_time_absolute_str(char* ptr)
     processed_time = gmtime(&raw_time);
     return strftime(ptr, 512, date_time_format, processed_time);
 }
+
+#ifdef _WIN32
+THORAX_API LARGE_INTEGER getFILETIMEoffset()
+{
+	SYSTEMTIME s;
+	FILETIME f;
+	LARGE_INTEGER t;
+
+	s.wYear = 1970;
+	s.wMonth = 1;
+	s.wDay = 1;
+	s.wHour = 0;
+	s.wMinute = 0;
+	s.wSecond = 0;
+	s.wMilliseconds = 0;
+	SystemTimeToFileTime(&s, &f);
+	t.QuadPart = f.dwHighDateTime;
+	t.QuadPart <<= 32;
+	t.QuadPart |= f.dwLowDateTime;
+	return (t);
+}
+
+THORAX_API int clock_gettime( int X, struct timespec *tv )
+{
+	LARGE_INTEGER           t;
+	FILETIME            f;
+	double                  microseconds;
+	static LARGE_INTEGER    offset;
+	static double           frequencyToMicroseconds;
+	static int              initialized = 0;
+	static BOOL             usePerformanceCounter = 0;
+
+	if (!initialized) 
+	{
+		LARGE_INTEGER performanceFrequency;
+		initialized = 1;
+		usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
+		if (usePerformanceCounter) 
+		{
+			QueryPerformanceCounter(&offset);
+			frequencyToMicroseconds = (double)performanceFrequency.QuadPart / 1000000.;
+		}
+		else 
+		{
+			offset = getFILETIMEoffset();
+			frequencyToMicroseconds = 10.;
+		}
+	}
+	if (usePerformanceCounter) QueryPerformanceCounter(&t);
+	else 
+	{
+		GetSystemTimeAsFileTime(&f);
+		t.QuadPart = f.dwHighDateTime;
+		t.QuadPart <<= 32;
+		t.QuadPart |= f.dwLowDateTime;
+	}
+
+	t.QuadPart -= offset.QuadPart;
+	microseconds = (double)t.QuadPart / frequencyToMicroseconds;
+	t.QuadPart = microseconds;
+	tv->tv_sec = t.QuadPart * SEC_PER_NSEC;
+	tv->tv_nsec = t.QuadPart % NSEC_PER_SEC;
+	return (0);
+}
+#endif

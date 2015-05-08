@@ -7,6 +7,11 @@
 
 
 #include <stdio.h>
+#ifndef _WIN32
+#include <unistd.h>
+#else
+#include <Windows.h>
+#endif
 
 #include "thorax_digital.h"
 #include "thorax_time.h"
@@ -15,6 +20,13 @@
 
 int main()
 {
+    // wait a little to advance the time stamp
+#ifndef _WIN32
+    usleep( 5000 );
+#else
+    Sleep( 5 );
+#endif
+
     struct timespec time;
     get_time_monotonic(&time);
     printf("%" PRIu64 "  %f\n", time_to_nsec(time), time_to_sec(time));

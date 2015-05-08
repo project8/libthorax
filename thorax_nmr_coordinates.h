@@ -11,6 +11,8 @@
 #ifndef THORAX_NMR_COORDS_H
 #define THORAX_NMR_COORDS_H
 
+#include "thorax_types.h"
+
 #include "math.h"
 
 /*
@@ -25,7 +27,7 @@ static const float r_concentric = 0.0161798;
  * terms of the nmr probe holder.  they consist of an eccentric angle,
  * a concentric angle, and a height z. 
  */
-typedef struct {
+THORAX_API typedef struct {
   float theta_concentric;
   float theta_eccentric;
   float z;
@@ -34,7 +36,7 @@ typedef struct {
 /*
  * next we have cartesian coordinates.  simple x, y, z.
  */
-typedef struct {
+THORAX_API typedef struct {
   float x;
   float y;
   float z;
@@ -43,7 +45,7 @@ typedef struct {
 /*
  * next we have cylindrical coordinates.  radius rho, angle theta, height z.
  */
-typedef struct {
+THORAX_API typedef struct {
   float rho;
   float theta;
   float z;
@@ -52,12 +54,12 @@ typedef struct {
 /*
  * conversion functions from magnet coordinates to normal coordinates
  */
-void magnet2cartesian(magnet_coord*, cartesian_coord*);
+THORAX_API void magnet2cartesian( magnet_coord*, cartesian_coord* );
 
 /*
  * compute distances
  */
-float cartesian_distance(cartesian_coord*, cartesian_coord*);
+THORAX_API float cartesian_distance( cartesian_coord*, cartesian_coord* );
 
 
 #endif //THORAX_NMR_COORDS_H

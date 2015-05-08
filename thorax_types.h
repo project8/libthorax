@@ -5,9 +5,19 @@
 #include <inttypes.h>
 
 
-/*
- * convenience typedefs for readability
- */
+// API export macros for windows
+#ifdef _WIN32
+#  ifdef THORAX_API_EXPORTS
+#    define THORAX_API __declspec(dllexport)
+#  else
+#    define THORAX_API __declspec(dllimport)
+#  endif
+#else
+#  define THORAX_API
+#endif
+
+
+//convenience typedefs for readability
 typedef uint64_t acquisition_id_type;
 typedef uint64_t record_id_type;
 typedef uint64_t time_nsec_type;
