@@ -5,6 +5,17 @@
 *.a
 *.dylib
 
+# Build
+Build/
+Build/*
+build*/
+build/*
+cbuild*/
+Install/
+Install/*
+install/
+install/*
+
 #from Eclipse
 .project
 .cproject

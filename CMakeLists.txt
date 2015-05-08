@@ -2,8 +2,10 @@
 # Author: N. Oblath
 
 # Minimum cmake version 2.6 required by the scripts to get Git information
-cmake_minimum_required (VERSION 2.6)
+# Minimum cmake verison 3.0 required by the way CMake handles rpath inforation on Mac OSX.
+cmake_minimum_required (VERSION 3.0)
 cmake_policy (SET CMP0011 NEW)
+cmake_policy (SET CMP0042 NEW)
 
 project (libthorax)
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
