@@ -1,15 +1,13 @@
 # CMakeLists for libthorax
 # Author: N. Oblath
 
-# Minimum cmake version 2.6 required by the scripts to get Git information
-# Minimum cmake verison 3.0 required by the way CMake handles rpath inforation on Mac OSX.
 cmake_minimum_required (VERSION 3.0)
-cmake_policy (SET CMP0011 NEW)
-cmake_policy (SET CMP0042 NEW)
 
-project (libthorax)
+cmake_policy( SET CMP0048 NEW ) # version in project()
+project (libthorax VERSION 0.2.1)
+
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
-pbuilder_prepare_project (0 2 1)
+pbuilder_prepare_project ()
 
 if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     pbuilder_add_ext_libraries (m)
