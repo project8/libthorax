@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 
-THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, struct dig_calib_params *params )
+THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, bool bits_r_aligned, struct dig_calib_params *params )
 {
     params->bit_depth = n_bits;
     params->levels = 1 << n_bits;
@@ -22,10 +22,11 @@ THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, doub
     params->inv_levels = 1. / (double)params->levels;
     params->inv_v_range = 1. / params->v_range;
     params->dac_gain = params->v_range * params->inv_levels;
+    params->bits_right_aligned = bits_r_aligned;
     return;
 }
 
-THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, double dac_gain, struct dig_calib_params *params )
+THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, double dac_gain, bool bits_r_aligned, struct dig_calib_params *params )
 {
     params->bit_depth = n_bits;
     params->levels = 1 << n_bits;
@@ -35,22 +36,23 @@ THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, dou
     params->inv_levels = 1. / ( double )params->levels;
     params->inv_v_range = 1. / params->v_range;
     params->dac_gain = dac_gain;
+    params->bits_right_aligned = bits_r_aligned;
     return;
 }
 
 THORAX_API void get_px1500_calib_params( struct dig_calib_params *params )
 {
-    return get_calib_params( px1500_bits, px1500_data_type_size, px1500_min_val, px1500_range, params );
+    return get_calib_params( px1500_bits, px1500_data_type_size, px1500_min_val, px1500_range, false, params );
 }
 
 THORAX_API void get_px14400_calib_params( struct dig_calib_params *params )
 {
-    return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range, params );
+    return get_calib_params( px14400_bits, px14400_data_type_size, px14400_min_val, px14400_range, false, params );
 }
 
 THORAX_API void get_u1084a_calib_params( struct dig_calib_params *params )
 {
-    return get_calib_params( u1084a_bits, u1084a_data_type_size, u1084a_min_val, u1084a_range, params );
+    return get_calib_params( u1084a_bits, u1084a_data_type_size, u1084a_min_val, u1084a_range, false, params );
 }
 
 

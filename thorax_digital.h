@@ -43,6 +43,7 @@ struct dig_calib_params
     double inv_levels;
     double inv_v_range;
     double dac_gain;
+    bool bits_right_aligned;
 };
 
 /*
@@ -55,8 +56,8 @@ struct dig_calib_params
 #define u1084a_range (u1084a_max_val - u1084a_min_val)
 
 
-THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, struct dig_calib_params *params );
-THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, double dac_gain, struct dig_calib_params *params );
+THORAX_API void get_calib_params( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, bool bits_r_aligned, struct dig_calib_params *params );
+THORAX_API void get_calib_params2( unsigned n_bits, unsigned data_type_size, double v_offset, double v_range, double dac_gain, bool bits_r_aligned, struct dig_calib_params *params );
 
 THORAX_API void get_px1500_calib_params( struct dig_calib_params *params );
 THORAX_API void get_px14400_calib_params( struct dig_calib_params *params );
