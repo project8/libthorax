@@ -3,7 +3,7 @@
 
 // Standard fixed-width integers (plus support for use in printf, etc)
 #include <inttypes.h>
-
+#include <stdbool.h>
 
 // API export macros for windows
 #ifdef _WIN32
