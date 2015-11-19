@@ -4,7 +4,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 cmake_policy( SET CMP0048 NEW ) # version in project()
-project (libthorax VERSION 0.2.2)
+project (libthorax VERSION 0.3.0)
 
 include (${PROJECT_SOURCE_DIR}/PackageBuilder.cmake)
 pbuilder_prepare_project ()
