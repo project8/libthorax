@@ -6,11 +6,12 @@
  */
 
 
-#include "thorax.hh"
+#include "thorax_time.hh"
 
 #include <iostream>
 
 using namespace std;
+using namespace thorax;
 
 int main()
 {

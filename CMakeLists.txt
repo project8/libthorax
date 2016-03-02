@@ -20,17 +20,16 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 include_directories (BEFORE ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/cpp)
 
 set (LIBTHORAX_HEADERFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_types.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/thorax.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_types.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.hh
 )
 
 set (LIBTHORAX_SOURCEFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_nmr_coordinates.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_digital.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/thorax_time.cc
 )
 
 
@@ -38,10 +37,10 @@ set (LIBTHORAX_SOURCEFILES
 add_library (thorax ${LIBTHORAX_SOURCEFILES})
 target_link_libraries (thorax ${EXTERNAL_LIBRARIES})
 
-add_executable (thorax_test ${CMAKE_CURRENT_SOURCE_DIR}/thorax_test.c)
+add_executable (thorax_test ${CMAKE_CURRENT_SOURCE_DIR}/thorax_test.cc)
 target_link_libraries (thorax_test thorax ${EXTERNAL_LIBRARIES})
 
-add_executable (thorax_cpp_test ${CMAKE_CURRENT_SOURCE_DIR}/cpp/thorax_cpp_test.cc)
+add_executable (thorax_cpp_test ${CMAKE_CURRENT_SOURCE_DIR}/thorax_cpp_test.cc)
 target_link_libraries (thorax_cpp_test thorax ${EXTERNAL_LIBRARIES})
 
 pbuilder_install_headers (${LIBTHORAX_HEADERFILES})

@@ -6,17 +6,17 @@
  */
 
 
-#include <stdio.h>
+#include <cstdio>
 #ifndef _WIN32
 #include <unistd.h>
 #else
 #include <Windows.h>
 #endif
 
-#include "thorax_digital.h"
-#include "thorax_time.h"
+#include "thorax_digital.hh"
+#include "thorax_time.hh"
 
-
+using namespace thorax;
 
 int main()
 {

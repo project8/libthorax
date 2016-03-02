@@ -16,14 +16,16 @@
 #  define THORAX_API
 #endif
 
+namespace thorax
+{
 
-//convenience typedefs for readability
-typedef uint64_t acquisition_id_type;
-typedef uint64_t record_id_type;
-typedef uint64_t time_nsec_type;
-typedef uint8_t byte_type;
+    //convenience typedefs for readability
+    typedef uint64_t acquisition_id_type;
+    typedef uint64_t record_id_type;
+    typedef uint64_t time_nsec_type;
+    typedef uint8_t byte_type;
 
-
+}
 
 //#include <stdlib.h>
 //#include <time.h>
